@@ -1,11 +1,21 @@
 {
-  "name": "embedded_app",
+  "name": "my-embeded8s",
   "version": "0.1.0",
   "private": true,
+  "main": "dist/my-embeded8.umd.js",
+  "module": "dist/my-embeded8.esm.js",
+  "unpkg": "dist/my-embeded8.min.js",
+  "browser": {
+    "./sfc": "src/my-embeded8.vue"
+  },
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "build2": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "build": "npm run build:umd & npm run build:es & npm run build:unpkg",
+    "build:umd": "rollup --config build/rollup.config.js --format umd --file dist/my-embeded8.umd.js",
+    "build:es": "rollup --config build/rollup.config.js --format es --file dist/my-embeded8.esm.js",
+    "build:unpkg": "rollup --config build/rollup.config.js --format iife --file dist/my-embeded8.min.js"
   },
   "dependencies": {
     "core-js": "^3.6.5",
@@ -18,7 +28,11 @@
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",
+    "rollup": "^1.17.0",
+    "@rollup/plugin-buble": "^0.21.3",
+    "@rollup/plugin-commonjs": "^11.1.0",
+    "rollup-plugin-vue": "^5.0.1"
   },
   "eslintConfig": {
     "root": true,
