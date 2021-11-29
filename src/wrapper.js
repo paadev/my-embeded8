@@ -1,12 +1,32 @@
 // Import vue component
-import component from './MyEmbeded8.vue';
+import MyEmbeded8 from './MyEmbeded8.vue';
+import EmberOne from './components/EmberOne.vue';
+import EmberTwo from './components/EmberTwo.vue';
+import EmberThree from './components/EmberThree.vue';
 
-// Declare install function executed by Vue.use()
-export function install(Vue) {
-	if (install.installed) return;
-	install.installed = true;
-	Vue.component('MyEmbeded8', component);
+export function install(Vue, options) {
+    if (install.installed) return;
+    install.installed = true;
+
+    const store = options.store;
+    const router = options.router;
+
+    Vue.prototype.countValue = options.countValue;
+
+    store.registerModule('myEmbeded8', {
+        state: {
+            foo: 'bar',
+        }
+    })
+    Vue.countValue = options.countValue;
+
+    router.addRoute({ path: '/self', component:  MyEmbeded8});
+    router.addRoute({ path: '/emberone', component:  EmberOne});
+    router.addRoute({ path: '/embertwo', component:  EmberTwo});
+    router.addRoute({ path: '/emberthree', component:  EmberThree});
 }
+
+MyEmbeded8.install = install;
 
 // Create module definition for Vue.use()
 const plugin = {
@@ -25,4 +45,4 @@ if (GlobalVue) {
 }
 
 // To allow use as module (npm/webpack/etc.) export component
-export default component;
+export default MyEmbeded8;
